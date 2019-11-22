@@ -83,6 +83,10 @@
             <% else %>
                 <a class="nav-item btn btn-outline-primary" href="/resources/archived.html">View in archive</a>
             <% end %>
+<!--        Confirm with Jill-->
+        <%# elsif session[:resource_owner] %>
+            <%# all_values = @has_many_hash %>
+            <%#= link_to('Edit', edit_resource_path(@resource), class: "btn btn-outline-primary") %>
         <% else %>
             <% all_values = @has_many_hash %>
         <% end %> 

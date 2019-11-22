@@ -219,6 +219,10 @@ module ResourcesControllerHelper
         end
         params.delete :api_key
       end
+
+      def set_resource_owner
+        @resource_owner = current_resource_owner
+      end
     
       def approve_many_sad_path(notice, code)
         respond_to do |format|

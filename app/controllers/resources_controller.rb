@@ -16,6 +16,7 @@ class ResourcesController < ApplicationController
   end
 
   before_action :set_user
+  before_action :set_resource_owner
 
   def has_many_value_hash
     {
@@ -233,12 +234,13 @@ class ResourcesController < ApplicationController
     return @full_resource
   end
 
- 
 
-
-  def edit
-    if !Resource.guest_update_params_allowed?(resource_params) and @user == nil
-      flash[:notice] = "You don't have permissions to update records"
+  # find the resource to edit based on owner's email
+  def owner_edit
+    # session[:resource_owner] = false
+    @resource = Resource.find_by(contact_email:params[:email])
+    if @resource_owner == nil or @resource.contact_email != @resource_owner.email
+      flash[:notice] = "You don't have permissions to update this record."
       redirect_to '/resources.html'
       return
     end
@@ -246,7 +248,32 @@ class ResourcesController < ApplicationController
     respond_to do |format|
       format.json {redirect_to "/resources/" + params[:id] + "/edit.html" }
       format.html do
-        @resource = Resource.find(params[:id]) 
+        @resource = Resource.find(params[:id])
+        @locations = Location.get_locations
+        @session = session
+        @has_many_hash = self.has_many_value_hash
+      end
+    end
+  end
+
+  def edit
+    if !Resource.guest_update_params_allowed?(resource_params) and @user == nil and @resource_owner == nil
+      flash[:notice] = "You don't have permissions to update records"
+      redirect_to '/resources.html'
+      return
+    end
+
+    @resource = Resource.find(params[:id])
+    if @resource_owner and @resource.contact_email != @resource_owner.email
+      flash[:notice] = "You don't have permissions to update this record."
+      redirect_to '/resources.html'
+      return
+    end
+
+    respond_to do |format|
+      format.json {redirect_to "/resources/" + params[:id] + "/edit.html" }
+      format.html do
+        @resource = Resource.find(params[:id])
         @locations = Location.get_locations
         @session = session
         @has_many_hash = self.has_many_value_hash

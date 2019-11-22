@@ -1,6 +1,7 @@
 class Resource < ActiveRecord::Base
   include ::Resourceconcern
 
+  belongs_to :resource_owner
   has_many :types, dependent: :destroy
   has_many :audiences, dependent: :destroy
   has_many :client_tags, dependent: :destroy
