@@ -55,7 +55,17 @@ RSpec.describe ResourcesController, :type => :controller do
       response = get :edit, params: {id: 1}
       response.should redirect_to '/resources.html'
     end
+
+    context "" do
+
+    end
+    it "allows resource owner to visit the edit page for a resource" do
+      response = get :edit, params: {id: 1}
+      expect(session[:resource_owner]).to eq true
+    end
   end
+
+
 
   describe "PATCH update" do
     it 'calls the correct model method' do
