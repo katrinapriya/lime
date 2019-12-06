@@ -295,3 +295,7 @@ end
 Given /locations are seeded/ do
   Location.seed
 end
+
+Then /open page/ do
+  save_and_open_page
+end

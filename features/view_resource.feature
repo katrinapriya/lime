@@ -12,6 +12,7 @@ Feature: view extra info on a resource
 
     Scenario: viewing more info on a resource
         Given I am on "/resources.html/"
+		Then open page
         Given I am on "/resources/1.html"
         Then I should see the text "Types"
         Then I should see the text "Research"
