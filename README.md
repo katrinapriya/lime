@@ -23,7 +23,7 @@ Run `psql postgres` in terminal.
 Create a new user: `create user postgres;`  
 Change the role: `alter user postgres createdb;`  
 Use `\du` to check users and their roles  
-Make sure user is a super user with `alter user postgres superuser`  
+Make sure user is a super user with `alter user postgres superuser;`  
 Exit with `\q`
 
 run `rake db:reset`  
